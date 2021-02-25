@@ -27,6 +27,8 @@ public class Position {
 		this.column = column;
 	}
 	
-	
+	public String toString() {
+		return getRow() +", "+getColumn();
+	}
 
 }
