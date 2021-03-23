@@ -33,7 +33,7 @@ public class UI {
 	public static final String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
 	public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
 	public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
-	
+
 	// https://stackoverflow.com/questions/2979383/java-clear-the-console
 	public static void clearScreen() {
 		System.out.print("\033[H\033[2J");
@@ -63,11 +63,7 @@ public class UI {
 		for (int i = 0; i < pieces.length; i++) {
 			System.out.print(8 - i + " ");
 			for (int j = 0; j < pieces.length; j++) {
-				if ((i + j) % 2 == 0) {
-					printPiece(pieces[i][j], false, true);
-				} else {
-					printPiece(pieces[i][j], false, false);
-				}
+				printPiece(pieces[i][j], false);
 			}
 			System.out.println();
 		}
@@ -79,10 +75,7 @@ public class UI {
 		for (int i = 0; i < pieces.length; i++) {
 			System.out.print(8 - i + " ");
 			for (int j = 0; j < pieces.length; j++) {
-				if ((i + j) % 2 == 0 && possibleMoves[i][j] == false) {
-					printPiece(pieces[i][j], possibleMoves[i][j], true);
-				} else
-					printPiece(pieces[i][j], possibleMoves[i][j], false);
+				printPiece(pieces[i][j], possibleMoves[i][j]);
 			}
 			System.out.println();
 		}
@@ -101,41 +94,17 @@ public class UI {
 
 	}
 
-	public static void printPiece(ChessPiece piece, boolean moveBackGround, boolean gridColor) {
-		if (moveBackGround) {
+	public static void printPiece(ChessPiece piece, boolean backGround) {
+		if (backGround) {
 			System.out.print(ANSI_BLUE_BACKGROUND);
 		}
 		if (piece == null) {
-			if (gridColor) {
-				if (!moveBackGround) {
-					System.out.print(ANSI_PURPLE_BACKGROUND);
-					System.out.print("-" + ANSI_RESET);
-				} else {
-					System.out.print(ANSI_BLUE_BACKGROUND);
-					System.out.print("-" + ANSI_RESET);
-				}
-			} else {
-				if (!moveBackGround) {
-					System.out.print(ANSI_BLACK_BACKGROUND);
-					System.out.print("-" + ANSI_RESET);
-				} else {
-					System.out.print(ANSI_BLUE_BACKGROUND);
-					System.out.print("-" + ANSI_RESET);
-				}
-			}
+			System.out.print("-" + ANSI_RESET);
 		} else {
-			if (gridColor) {
-				if (piece.getColor() == Color.WHITE) {
-					System.out.print(ANSI_WHITE + ANSI_PURPLE_BACKGROUND + piece + ANSI_RESET);
-				} else {
-					System.out.print(ANSI_YELLOW + ANSI_PURPLE_BACKGROUND + piece + ANSI_RESET);
-				}
+			if (piece.getColor() == Color.WHITE) {
+				System.out.print(ANSI_WHITE + piece + ANSI_RESET);
 			} else {
-				if (piece.getColor() == Color.WHITE) {
-					System.out.print(ANSI_WHITE + piece + ANSI_RESET);
-				} else {
-					System.out.print(ANSI_YELLOW + piece + ANSI_RESET);
-				}
+				System.out.print(ANSI_YELLOW + piece + ANSI_RESET);
 			}
 		}
 		System.out.print(" ");
